@@ -45,8 +45,12 @@ P = np.array([-5.-3.j,-5.+3.j,-7.,-10.])
 K = ct.place(A,B1,P)
 print("反馈值K:",K)
 
+sys_init = ct.ss(A,B1,C,D)
+ct.pzmap(sys_init)
 sys_task = ct.ss(A-B1*K,B2,C,D)
-#ct.pzmap(sys_task)
+
+ct.pzmap(sys_task)
+
 t = np.linspace(0, 10, 101)
 u = np.zeros(len(t))
 u[11:101] = 1.72
@@ -55,7 +59,7 @@ u[11:101] = 1.72
 
 f_t,f_yout,f_xout = ct.forced_response(sys_task,t,u)
 
-plt.close()
+#plt.close()
 plt.figure()
 plt.clf()
 plt.grid()
