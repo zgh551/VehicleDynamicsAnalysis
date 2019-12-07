@@ -12,4 +12,4 @@ this project for the analysisi of the vehicle model
 
 闭环系统的阶跃响应如下
 
-![](https://raw.githubusercontent.com/zgh551/FigureBed/master/img/Figure_3.png#pic_center)
+![](https://raw.githubusercontent.com/zgh551/FigureBed/master/img/Figure_4.png#pic_center)

@@ -45,15 +45,14 @@ P = np.array([-5.-3.j,-5.+3.j,-7.,-10.])
 K = ct.place(A,B1,P)
 print("反馈值K:",K)
 
-sys_init = ct.ss(A,B1,C,D)
-ct.pzmap(sys_init)
+#sys_init = ct.ss(A,B1,C,D)
+#ct.pzmap(sys_init)
 sys_task = ct.ss(A-B1*K,B2,C,D)
-
-ct.pzmap(sys_task)
+#ct.pzmap(sys_task)
 
 t = np.linspace(0, 10, 101)
 u = np.zeros(len(t))
-u[11:101] = 1.72
+u[11:101] = 0.03
 
 #s_t,s_yout = ct.step_response(sys_task,t)
 
@@ -62,10 +61,17 @@ f_t,f_yout,f_xout = ct.forced_response(sys_task,t,u)
 #plt.close()
 plt.figure()
 plt.clf()
-plt.grid()
+
 plt.subplot(3,1,1)
+plt.grid()
+plt.ylabel("(rad/s)")
 plt.plot(f_t,u)
 plt.subplot(3,1,2)
+plt.grid()
+plt.ylabel("e1:(m)")
 plt.plot(f_t,f_yout[0])
 plt.subplot(3,1,3)
+plt.grid()
+plt.xlabel("time:(s)")
+plt.ylabel("e2:(rad)")
 plt.plot(f_t,f_yout[2])
