@@ -19,7 +19,7 @@ C_alpha_f = 80000.0 #(N/rad) 前轮总侧偏刚度
 C_alpha_r = 80000.0 #(N/rad) 后轮总侧偏刚度
 V_x = 25.0 # (m/s)
 ds = 2.
-K = 1
+K = 0.1
 Tn = 0.5
 Td = 0.1
 
@@ -62,14 +62,11 @@ plt.ylabel("phase(deg)")
 plt.xlabel("frequency(rad/s)")
 plt.plot(omega,phase*57.3-360)
 
-
-
-
 # controllor function
 sys_tf_c = K*ct.tf([Tn,1.],[Td,1.])
 
 # PC function
-sys_tf_pc = ct.series(sys_tf_p,K)
+sys_tf_pc = ct.series(sys_tf_p,sys_tf_c)
 
 plt.figure()
 real, imag, freq  = ct.nyquist_plot(sys_tf_pc,Plot=True)
@@ -85,7 +82,16 @@ real, imag, freq  = ct.nyquist_plot(sys_tf_pc,Plot=True)
 #plt.ylim(-0.1,0.1)
 
 plt.figure()
-ct.bode_plot(sys_tf_pc,np.logspace(-1,1)*2*np.pi,dB=True,Hz=False,margins=True)
+mag,phase,omega = ct.bode_plot(sys_tf_pc,np.logspace(-2,1)*2*np.pi,dB=True,Hz=False,margins=True)
 
-ct.root_locus(sys_tf_p)
+plt.figure()
+plt.subplot(2,1,1)
+plt.plot(omega,np.log10(mag))
+plt.ylabel("mag")
+plt.subplot(2,1,2)
+plt.ylabel("phase(deg)")
+plt.xlabel("frequency(rad/s)")
+plt.plot(omega,phase*57.3)
+
+ct.root_locus(sys_tf_pc)
 
